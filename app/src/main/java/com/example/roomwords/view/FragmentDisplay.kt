@@ -40,7 +40,6 @@ class FragmentDisplay: Fragment() {
 
     fun displayData(dataSet: List<WordEntity>) {
         adapter.dataSet = dataSet
-        adapter.notifyDataSetChanged()
     }
 
     companion object {

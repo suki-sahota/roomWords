@@ -9,6 +9,10 @@ import com.example.roomwords.view.DisplayVH
 class DisplayAdapter(): RecyclerView.Adapter<DisplayVH>() {
 
     var dataSet: List<WordEntity> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DisplayVH(
