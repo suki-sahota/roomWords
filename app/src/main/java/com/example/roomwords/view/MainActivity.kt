@@ -48,15 +48,15 @@ class MainActivity : AppCompatActivity(), IView {
             .commit()
     }
 
-    override fun getWords(): List<WordEntity> = runBlocking {
-        presenter.queryDB()
+    override fun getWords(): List<WordEntity> {
+        return presenter.queryDB()
     }
 
     override fun isWordEmpty(word: String): Boolean {
         return presenter.isWordEmpty(word)
     }
 
-    override fun saveWord(word: String) = runBlocking {
+    override fun saveWord(word: String) {
         presenter.insertWord(word)
     }
 }

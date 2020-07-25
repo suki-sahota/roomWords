@@ -17,16 +17,16 @@ class Presenter {
         this.view = view
     }
 
-    suspend fun queryDB(): List<WordEntity> {
+    fun queryDB(): List<WordEntity> = runBlocking {
         val dao: WordDao? = RoomApplication.roomContext?.let { WordRoomDB.getInstance(it).dao() }
-        return if (dao?.getAllWords() != null) dao.getAllWords() else listOf()
+        if (dao?.getAllWords() != null) dao.getAllWords() else listOf()
     }
 
     fun isWordEmpty(word: String): Boolean {
         return word.isEmpty()
     }
 
-    suspend fun insertWord(word: String) {
+    fun insertWord(word: String) = runBlocking {
         val dao: WordDao? = RoomApplication.roomContext?.let { WordRoomDB.getInstance(it).dao() }
         val entry = WordEntity(word = word)
         dao?.insertWord(entry)
