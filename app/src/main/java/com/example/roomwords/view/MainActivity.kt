@@ -2,20 +2,15 @@ package com.example.roomwords.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomwords.R
-import com.example.roomwords.model.DisplayAdapter
 import com.example.roomwords.model.WordEntity
 import com.example.roomwords.presenter.Presenter
-import kotlinx.android.synthetic.main.layout_fragment_display.*
-import kotlinx.coroutines.runBlocking
-import java.security.AccessController.getContext
 
 class MainActivity : AppCompatActivity(), IView {
 
-    lateinit var presenter: Presenter
-    val fragmentDisplay: FragmentDisplay = FragmentDisplay.newInstance()
-    val fragmentCreate: FragmentCreate = FragmentCreate.newInstance()
+    private val presenter: Presenter by lazy { Presenter() }
+    private val fragmentDisplay: FragmentDisplay = FragmentDisplay.newInstance()
+    private val fragmentCreate: FragmentCreate = FragmentCreate.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +21,7 @@ class MainActivity : AppCompatActivity(), IView {
     }
 
     override fun bindPresenter() {
-        presenter = Presenter() // Late initialization happens here...
-        presenter.onBind(this)
+        presenter.onBind(this) // Calls constructor in lazy block...
     }
 
     override fun initFragments() {

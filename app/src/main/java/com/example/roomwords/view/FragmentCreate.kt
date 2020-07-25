@@ -12,11 +12,12 @@ import kotlinx.android.synthetic.main.layout_fragment_create.view.*
 
 class FragmentCreate: Fragment() {
 
-    var listener: IView? = null
+    private lateinit var listener: IView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) listener = context
+        // Ensures fragment is implemented in an activity that inherits IView
+        if (context is MainActivity) listener = context // Late initialization happens here...
     }
 
     override fun onCreateView(
@@ -28,10 +29,10 @@ class FragmentCreate: Fragment() {
         val view = inflater.inflate(R.layout.layout_fragment_create, container, false)
 
         view.btn_save_word.setOnClickListener {
-            if (listener?.isWordEmpty(view.til_word.editText?.text.toString())!!) {
+            if (listener.isWordEmpty(view.til_word.editText?.text.toString())) {
                 Toast.makeText(activity, "Please type something!", Toast.LENGTH_LONG).show()
             } else {
-                listener?.saveWord(view.til_word.editText?.text.toString())
+                listener.saveWord(view.til_word.editText?.text.toString())
                 view.til_word.editText?.text?.clear()
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }

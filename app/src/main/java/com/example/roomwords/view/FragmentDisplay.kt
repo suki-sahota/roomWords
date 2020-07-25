@@ -10,18 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roomwords.R
 import com.example.roomwords.model.DisplayAdapter
 import com.example.roomwords.model.WordEntity
-import kotlinx.android.synthetic.main.layout_fragment_display.*
 import kotlinx.android.synthetic.main.layout_fragment_display.view.*
 
 class FragmentDisplay: Fragment() {
 
-    var listener: IView? = null
+    private lateinit var listener: IView
     private val adapter: DisplayAdapter by lazy { DisplayAdapter() }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        // Prevents failure when FragmentDisplay is implemented in a different activity than where IView is inherited
-        if (context is MainActivity) listener = context
+        // Ensures fragment is implemented in an activity that inherits IView
+        if (context is MainActivity) listener = context // Late initialization happens here...
     }
 
     override fun onCreateView(
@@ -32,7 +31,7 @@ class FragmentDisplay: Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.layout_fragment_display, container, false)
         view.foab.setOnClickListener {
-            listener?.navigateCreateFragment()
+            listener.navigateCreateFragment()
         }
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
         view.recycler_view.adapter = adapter // Calls constructor in lazy block

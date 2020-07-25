@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.roomwords.R
-import kotlinx.coroutines.runBlocking
 
 @Database(entities = [WordEntity::class], version = 1, exportSchema = false)
 abstract class WordRoomDB: RoomDatabase() { // The actual Room DB is created here...

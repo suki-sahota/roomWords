@@ -6,30 +6,29 @@ import com.example.roomwords.model.WordEntity
 import com.example.roomwords.model.WordRoomDB
 import com.example.roomwords.view.IView
 import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import java.lang.Runnable
 
 class Presenter {
 
-    var view: IView? = null
+    private lateinit var view: IView
 
     fun onBind(view: IView) {
-        this.view = view
+        this.view = view // Late initialization happens here...
     }
 
     fun queryDB(): List<WordEntity> = runBlocking {
         val dao: WordDao? = RoomApplication.roomContext?.let { WordRoomDB.getInstance(it).dao() }
-        if (dao?.getAllWords() != null) dao.getAllWords() else listOf()
+        dao?.getAllWords() ?: listOf()
     }
 
     fun isWordEmpty(word: String): Boolean {
         return word.isEmpty()
     }
 
-    fun insertWord(word: String) = runBlocking {
+    fun insertWord(word: String) = GlobalScope.launch {
         val dao: WordDao? = RoomApplication.roomContext?.let { WordRoomDB.getInstance(it).dao() }
         val entry = WordEntity(word = word)
         dao?.insertWord(entry)
-        view?.getWords()?.let { view?.displayData(it) } // Updates FragmentDisplay with current info
+        view.displayData(queryDB()) // Updates FragmentDisplay with current info
+//        view?.getWords()?.let { view?.displayData(it) } // Updates FragmentDisplay with current info
     }
 }
