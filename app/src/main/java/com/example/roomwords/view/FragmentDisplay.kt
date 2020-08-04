@@ -29,7 +29,8 @@ class FragmentDisplay: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.layout_fragment_display, container, false)
+        val view = inflater.inflate(
+            R.layout.layout_fragment_display, container, false)
         view.foab.setOnClickListener {
             listener.navigateCreateFragment()
         }

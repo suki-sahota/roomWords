@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity(), IView {
         displayData(getWords())
     }
 
+    override fun getWords(): List<WordEntity> {
+        return presenter.queryDB()
+    }
+
     override fun displayData(dataSet: List<WordEntity>) {
         fragmentDisplay.displayData(dataSet)
     }
@@ -40,10 +44,6 @@ class MainActivity : AppCompatActivity(), IView {
             .replace(R.id.fragment_container, fragmentCreate)
             .addToBackStack("create")
             .commit()
-    }
-
-    override fun getWords(): List<WordEntity> {
-        return presenter.queryDB()
     }
 
     override fun isWordEmpty(word: String): Boolean {

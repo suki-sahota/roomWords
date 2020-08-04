@@ -33,7 +33,7 @@ class FragmentCreate: Fragment() {
                 Toast.makeText(activity, "Please type something!", Toast.LENGTH_LONG).show()
             } else {
                 listener.saveWord(view.til_word.editText?.text.toString())
-                view.til_word.editText?.text?.clear()
+//                view.til_word.editText?.text?.clear()
                 activity!!.supportFragmentManager.popBackStackImmediate()
             }
         }
